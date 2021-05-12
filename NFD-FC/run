@@ -1,0 +1,6 @@
+#!/bin/sh
+NAME="/home/ndn1/Documents/ndnPath"
+
+./waf configure --prefix=$NAME --includedir=$NAME --libdir=$NAME
+./waf
+
