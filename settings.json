@@ -1,0 +1,9 @@
+{
+    "editor.defaultFormatter": "xaver.clang-format",
+    "clang-format.executable": "/usr/bin/clang-format-7",
+    "clang-format.language.cpp.style": "{ BasedOnStyle: Google, IndentWidth: 2, ColumnLimit: 80, DerivePointerAlignment: false, PointerAlignment: Left }",
+    "[cpp]": {
+        "editor.tabSize": 2
+    },
+    "editor.formatOnSave": true
+}
