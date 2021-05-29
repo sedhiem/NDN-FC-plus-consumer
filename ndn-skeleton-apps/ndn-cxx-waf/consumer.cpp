@@ -62,10 +62,15 @@ public:
   void
   createFilefromBuffer(const uint8_t* buffer, size_t bufferSize)
   {
-    std::ofstream outfile("test.jpg", std::ofstream::binary);
-    outfile.write((const char*)buffer, bufferSize);
-    outfile.close();
-
+    try {
+      std::ofstream outfile("savedtest.jpg", std::ofstream::binary);
+      outfile.exceptions(std::ofstream::failbit);
+      outfile.write((const char*)buffer, bufferSize);
+      outfile.close();
+    } catch(const std::exception& e) {
+      std::cerr << "file error" << std::endl;
+    }
+    std::cout << "saved" << std::endl;
     return;
   }
 
