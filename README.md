@@ -43,3 +43,5 @@ sudo ldconfig
 
 
 その後、尾崎君ドキュメントに従ってnfdを起動しする。その後ndn-skeleton-apps/ndn-cxx-wafにあるconsumer、producer、functionを起動する
+
+docker run -tid --name yolo -p 33115:33115 yoheimmtw/yolo /bin/bash
