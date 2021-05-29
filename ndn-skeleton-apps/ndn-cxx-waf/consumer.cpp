@@ -50,18 +50,6 @@ public:
   void
   processContentPayload(Consumer& contentConsumer, const uint8_t* buffer, size_t bufferSize)
   {
-    std::cout << "Received All Segments" << std::endl;
-    std::cout << "bufferSize: " << bufferSize << std::endl;
-    std::cout << "Creating File" << std::endl;
-    createFilefromBuffer(buffer, bufferSize);
-    std::cout << "DONE" << std::endl;
-
-    return;
-  }
-
-  void
-  createFilefromBuffer(const uint8_t* buffer, size_t bufferSize)
-  {
     try {
       std::ofstream outfile("savedtest.jpg", std::ofstream::binary);
       outfile.exceptions(std::ofstream::failbit);
@@ -71,6 +59,17 @@ public:
       std::cerr << "file error" << std::endl;
     }
     std::cout << "saved" << std::endl;
+
+    return;
+  }
+
+  void
+  createFilefromBuffer(const uint8_t* buffer, size_t bufferSize)
+  {
+    std::ofstream outfile("test.jpg", std::ofstream::binary);
+    outfile.write((const char*)buffer, bufferSize);
+    outfile.close();
+
     return;
   }
 
@@ -109,8 +108,8 @@ int main(int argc, char* argv[])
   contentConsumer.setContextOption(INTEREST_LEAVE_CNTX, (ConsumerInterestCallback)bind(&CallbackContainer::leavingContentInterest, &callback, _1, _2));
   contentConsumer.setContextOption(FUNCTION, functionName);
   contentConsumer.setContextOption(EraseCache, 1);
-  //contentConsumer.setContextOption(FINAL_BLOCK_ID, callback.m_finalBlockId);
-  //std::cout << callback.m_finalBlockId << std::endl;
+  contentConsumer.setContextOption(FINAL_BLOCK_ID, callback.m_finalBlockId);
+  std::cout << callback.m_finalBlockId << std::endl;
   contentConsumer.consume(a2);
 
   return 0;
