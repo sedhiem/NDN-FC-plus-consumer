@@ -1,22 +1,23 @@
 #ifndef STORE_HPP
 #define STORE_HPP
 
-#include <vector>
-#include <string>
 #include <iostream>
 #include <stdio.h>
+#include <string>
+#include <vector>
 
 using namespace std;
 
-class store{
-
+class store
+{
 public:
-  void string(int x, int y, string a);
-  
+  void
+  string(int x, int y, string a);
+
   const std::string InterestArray[4][20];
 
-  void Test();
-
+  void
+  Test();
 };
-  
+
 #endif // STORE_HPP

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+#include <ndn-cxx/data.hpp>
 #include <ndn-cxx/face.hpp>
 #include <ndn-cxx/interest.hpp>
-#include <ndn-cxx/data.hpp>
 #include <ndn-cxx/security/key-chain.hpp>
 
 #include <iostream>
@@ -33,10 +33,8 @@ public:
   {
     m_face.setInterestFilter(m_baseName,
                              std::bind(&Server::onInterest, this, _2),
-                             std::bind([] {
-                                 std::cerr << "Prefix registered" << std::endl;
-                               }),
-                             [] (const ndn::Name& prefix, const std::string& reason) {
+                             std::bind([] { std::cerr << "Prefix registered" << std::endl; }),
+                             [](const ndn::Name& prefix, const std::string& reason) {
                                std::cerr << "Failed to register prefix: " << reason << std::endl;
                              });
   }
@@ -54,11 +52,11 @@ private:
     std::ostringstream os;
     os << "C++ LINE #" << (m_counter++) << std::endl;
     std::string content = os.str();
-    std::cout <<"hello.txt: " << content << std::endl;
+    std::cout << "hello.txt: " << content << std::endl;
     data->setContent(reinterpret_cast<const uint8_t*>(content.c_str()), content.size());
 
     // set metainfo parameters
-  //data->setFreshnessPeriod(ndn::time::seconds(10));
+    //data->setFreshnessPeriod(ndn::time::seconds(10));
 
     // sign data packet
     m_keyChain.sign(*data);

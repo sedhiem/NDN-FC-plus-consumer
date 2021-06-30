@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+#include <ndn-cxx/data.hpp>
 #include <ndn-cxx/face.hpp>
 #include <ndn-cxx/interest.hpp>
-#include <ndn-cxx/data.hpp>
 
 #include <iostream>
 #include <string>
@@ -25,8 +25,7 @@
 class Client
 {
 public:
-  explicit
-  Client(ndn::Face& face, const std::string& filename)
+  explicit Client(ndn::Face& face, const std::string& filename)
     : m_face(face)
     , m_baseName(ndn::Name("/my-local-prefix/simple-fetch/file").append(filename))
     , m_currentSeqNo(0)
@@ -52,9 +51,7 @@ private:
   void
   onData(const ndn::Data& data)
   {
-    std::cerr << "<< C++ "
-              << std::string(reinterpret_cast<const char*>(data.getContent().value()),
-                                                           data.getContent().value_size())
+    std::cerr << "<< C++ " << std::string(reinterpret_cast<const char*>(data.getContent().value()), data.getContent().value_size())
               << std::endl;
 
     if (data.getName().get(-1).toSequenceNumber() >= 10) {

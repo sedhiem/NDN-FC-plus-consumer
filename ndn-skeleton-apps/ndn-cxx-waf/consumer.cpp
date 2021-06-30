@@ -1,6 +1,6 @@
-#include<Consumer-Producer-API/consumer-context.hpp>
-#include<iostream>
-#include<fstream>
+#include <Consumer-Producer-API/consumer-context.hpp>
+#include <fstream>
+#include <iostream>
 
 using namespace ndn;
 
@@ -8,7 +8,7 @@ class CallbackContainer
 {
 public:
   CallbackContainer()
-  : m_dataCounter(0)
+    : m_dataCounter(0)
   {
   }
 
@@ -29,22 +29,23 @@ public:
 
   void
   processInfoData(Consumer& pilotConsumer, const Data& data)
-  {std::cout << "data: " << data.getName() << std::endl;
-      std::string str(reinterpret_cast<const char*>(data.getContent().value()), data.getContent().value_size());
-      int finalBlockId = std::stoi(str);
-      std::cout << "finalBlockId: " << finalBlockId << std::endl;
-      std::cout << "------------------------------------------------------" << std::endl;
-      m_finalBlockId = (uint64_t)finalBlockId;
-      return;
+  {
+    std::cout << "data: " << data.getName() << std::endl;
+    std::string str(reinterpret_cast<const char*>(data.getContent().value()), data.getContent().value_size());
+    int finalBlockId = std::stoi(str);
+    std::cout << "finalBlockId: " << finalBlockId << std::endl;
+    std::cout << "------------------------------------------------------" << std::endl;
+    m_finalBlockId = (uint64_t)finalBlockId;
+    return;
   }
 
   void
   processContentData(Consumer& pilotConsumer, const Data& data)
   {
-      std::cout << "------------------Received Data-------------------------" << std::endl;
-      std::cout << "data: " << data.getName() << std::endl;
-      std::cout << "------------------------------------------------------" << std::endl;
-      return;
+    std::cout << "------------------Received Data-------------------------" << std::endl;
+    std::cout << "data: " << data.getName() << std::endl;
+    std::cout << "------------------------------------------------------" << std::endl;
+    return;
   }
 
   void
@@ -67,7 +68,8 @@ public:
       outfile.exceptions(std::ofstream::failbit);
       outfile.write((const char*)buffer, bufferSize);
       outfile.close();
-    } catch(const std::exception& e) {
+    }
+    catch (const std::exception& e) {
       std::cerr << "file error" << std::endl;
     }
     std::cout << "saved" << std::endl;
@@ -81,7 +83,8 @@ private:
   int m_dataCounter;
 };
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
   CallbackContainer callback;
 
@@ -93,7 +96,7 @@ int main(int argc, char* argv[])
   pilotConsumer.setContextOption(INTEREST_LEAVE_CNTX, (ConsumerInterestCallback)bind(&CallbackContainer::leavingInfoInterest, &callback, _1, _2));
   pilotConsumer.consume("test.jpg");*/
 
-  if(argc < 3){
+  if (argc < 3) {
     std::cerr << "Input Prefix for InterestName & FunctionName" << std::endl;
     return 1;
   }
@@ -105,9 +108,11 @@ int main(int argc, char* argv[])
   contentConsumer.setContextOption(MUST_BE_FRESH_S, true);
   contentConsumer.setContextOption(INTEREST_LIFETIME, 1000000);
   contentConsumer.setContextOption(MAX_WINDOW_SIZE, 300);
-  contentConsumer.setContextOption(CONTENT_RETRIEVED, (ConsumerContentCallback)bind(&CallbackContainer::processContentPayload, &callback, _1, _2, _3));
+  contentConsumer.setContextOption(CONTENT_RETRIEVED,
+                                   (ConsumerContentCallback)bind(&CallbackContainer::processContentPayload, &callback, _1, _2, _3));
   contentConsumer.setContextOption(DATA_ENTER_CNTX, (ConsumerDataCallback)bind(&CallbackContainer::processContentData, &callback, _1, _2));
-  contentConsumer.setContextOption(INTEREST_LEAVE_CNTX, (ConsumerInterestCallback)bind(&CallbackContainer::leavingContentInterest, &callback, _1, _2));
+  contentConsumer.setContextOption(INTEREST_LEAVE_CNTX,
+                                   (ConsumerInterestCallback)bind(&CallbackContainer::leavingContentInterest, &callback, _1, _2));
   contentConsumer.setContextOption(FUNCTION, functionName);
   contentConsumer.setContextOption(EraseCache, 1);
   contentConsumer.setContextOption(FINAL_BLOCK_ID, callback.m_finalBlockId);

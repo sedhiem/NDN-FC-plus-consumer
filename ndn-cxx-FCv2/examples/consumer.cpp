@@ -43,7 +43,7 @@ public:
     interest.setMustBeFresh(true);
 
     m_face.expressInterest(interest,
-                           bind(&Consumer::onData, this,  _1, _2),
+                           bind(&Consumer::onData, this, _1, _2),
                            bind(&Consumer::onNack, this, _1, _2),
                            bind(&Consumer::onTimeout, this, _1));
 
@@ -63,8 +63,7 @@ private:
   void
   onNack(const Interest& interest, const lp::Nack& nack)
   {
-    std::cout << "received Nack with reason " << nack.getReason()
-              << " for interest " << interest << std::endl;
+    std::cout << "received Nack with reason " << nack.getReason() << " for interest " << interest << std::endl;
   }
 
   void

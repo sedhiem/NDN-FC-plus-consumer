@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+#include <ndn-cxx/data.hpp>
 #include <ndn-cxx/face.hpp>
 #include <ndn-cxx/interest.hpp>
-#include <ndn-cxx/data.hpp>
 
 #include <iostream>
 #include <string>
@@ -25,14 +25,13 @@
 class Client
 {
 public:
-  explicit
-  Client(ndn::Face& face, const std::string& filename, const std::string& functionName)
+  explicit Client(ndn::Face& face, const std::string& filename, const std::string& functionName)
     : m_face(face)
     , m_baseName(ndn::Name("/my-local-prefix/simple-fetch/file").append(filename))
     , m_functionName(ndn::Function(functionName))
 
   {
-  //std::cerr << "Base name: " << m_baseName << std::endl;
+    //std::cerr << "Base name: " << m_baseName << std::endl;
     sendInterest();
   }
 
@@ -54,11 +53,9 @@ private:
   void
   onData(const ndn::Data& data)
   {
-    std::cerr << "<< Data: "
-              << std::string(reinterpret_cast<const char*>(data.getContent().value()),
-                                                           data.getContent().value_size())
+    std::cerr << "<< Data: " << std::string(reinterpret_cast<const char*>(data.getContent().value()), data.getContent().value_size())
               << std::endl;
-      return;
+    return;
   }
 
   void
@@ -93,8 +90,8 @@ main(int argc, char** argv)
   }
 
   std::string functionName;
-  if(argv[2] == NULL){
-      functionName = "/";
+  if (argv[2] == NULL) {
+    functionName = "/";
   }
 
   functionName = argv[2];
