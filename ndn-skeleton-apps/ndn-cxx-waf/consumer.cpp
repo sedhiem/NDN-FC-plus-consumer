@@ -84,15 +84,7 @@ private:
 int main(int argc, char* argv[])
 {
   CallbackContainer callback;
-
-  /*Name pilotConsumerName("test/producer/info");
-  Consumer pilotConsumer(pilotConsumerName, SDR);
-  pilotConsumer.setContextOption(MUST_BE_FRESH_S, true);
-  pilotConsumer.setContextOption(INTEREST_LIFETIME, 5000);
-  pilotConsumer.setContextOption(DATA_ENTER_CNTX, (ConsumerDataCallback)bind(&CallbackContainer::processInfoData, &callback, _1, _2));
-  pilotConsumer.setContextOption(INTEREST_LEAVE_CNTX, (ConsumerInterestCallback)bind(&CallbackContainer::leavingInfoInterest, &callback, _1, _2));
-  pilotConsumer.consume("test.jpg");*/
-
+  
   if(argc < 3){
     std::cerr << "Input Prefix for InterestName & FunctionName" << std::endl;
     return 1;
