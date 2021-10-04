@@ -1,6 +1,6 @@
 # ozaki-ndn
 
-尾崎君のアプリを実行するためにはまず3つのプログラム: ndn-css、NFD、Consumer/ProducerAPI を各コンピュータにインストールする必要があります。
+尾崎君のアプリを実行するためにはまず3つのプログラム: ndn-cxx、NFD、Consumer/ProducerAPI を各コンピュータにインストールする必要があります。
 
 1. ndn-cxx
 
