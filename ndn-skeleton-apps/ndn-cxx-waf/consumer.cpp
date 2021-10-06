@@ -114,9 +114,10 @@ main(int argc, char* argv[])
   contentConsumer.setContextOption(INTEREST_LEAVE_CNTX,
                                    (ConsumerInterestCallback)bind(&CallbackContainer::leavingContentInterest, &callback, _1, _2));
   contentConsumer.setContextOption(FUNCTION, functionName);
-  contentConsumer.setContextOption(EraseCache, 1);
+  contentConsumer.setContextOption(EraseCache, 0);
   contentConsumer.setContextOption(FINAL_BLOCK_ID, callback.m_finalBlockId);
   std::cout << callback.m_finalBlockId << std::endl;
+  std::cout << "consumer" << std::endl;
   contentConsumer.consume(a2);
 
   return 0;
