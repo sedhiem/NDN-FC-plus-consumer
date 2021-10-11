@@ -230,6 +230,7 @@ private:
   int m_currentWindowSize;
   int m_nMaxRetransmissions;
   int m_nMaxExcludedDigests;
+  int m_requestInterval;
   size_t m_sendBufferSize;
   size_t m_receiveBufferSize;
 

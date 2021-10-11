@@ -151,7 +151,11 @@ Consumer::setContextOption(int optionName, int optionValue)
     case EraseCache:
       m_erasecache = optionValue;
       return OPTION_VALUE_SET;
-      
+
+    case REQUEST_INTERVAL:
+      m_requestInterval = optionValue;
+      return OPTION_VALUE_SET;
+
     case MIN_WINDOW_SIZE:
       m_minWindowSize = optionValue;
       return OPTION_VALUE_SET;
@@ -499,7 +503,11 @@ Consumer::getContextOption(int optionName, int& optionValue)
       optionValue = m_erasecache;
       //m_erasecache = 0;
       return OPTION_FOUND;
-      
+
+    case REQUEST_INTERVAL:
+      optionValue = m_requestInterval;
+      return OPTION_FOUND;
+
     case MIN_WINDOW_SIZE:
       optionValue = m_minWindowSize;
       return OPTION_FOUND;

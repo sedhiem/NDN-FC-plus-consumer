@@ -147,7 +147,11 @@ ReliableDataRetrieval::sendInterest()
 {
   int erasecache;
   m_context->getContextOption(EraseCache, erasecache);
-  
+
+  // requestIntervalの値を取得
+  int requestInterval;
+  m_context->getContextOption(REQUEST_INTERVAL, requestInterval);
+
   Name prefix;
   m_context->getContextOption(PREFIX, prefix);
 
@@ -172,6 +176,9 @@ ReliableDataRetrieval::sendInterest()
   interest.setFunction(Function(functionAsName.toUri()));
 
   interest.setEraseCache((uint)erasecache);
+
+  // 送信するInterestパケットにrequestIntervalの値をセット
+  interest.setRequestInterval((uint)REQUEST_INTERVAL);
 
   SelectorHelper::applySelectors(interest, m_context);
 
