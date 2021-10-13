@@ -48,12 +48,12 @@
 #ifndef NFD_DAEMON_TABLE_CS_HPP
 #define NFD_DAEMON_TABLE_CS_HPP
 
-#include "cs-policy.hpp"
-#include "cs-internal.hpp"
 #include "cs-entry-impl.hpp"
+#include "cs-internal.hpp"
+#include "cs-policy.hpp"
+#include <ndn-cxx/security/key-chain.hpp>
 #include <ndn-cxx/util/signal.hpp>
 #include <boost/iterator/transform_iterator.hpp>
-#include <ndn-cxx/security/key-chain.hpp>
 
 namespace nfd {
 namespace cs {
@@ -63,8 +63,7 @@ namespace cs {
 class Cs : noncopyable
 {
 public:
-  explicit
-  Cs(size_t nMaxPackets = 10);
+  explicit Cs(size_t nMaxPackets = 10);
 
   /** \brief inserts a Data packet
    */
@@ -82,13 +81,11 @@ public:
    *        The callback may be invoked either before or after find() returns
    */
   void
-  find(const Interest& interest,
-       const HitCallback& hitCallback,
-       const MissCallback& missCallback) const;
+  find(const Interest& interest, const HitCallback& hitCallback, const MissCallback& missCallback) const;
 
   void
   erase(const Interest& interest) const;
-  
+
   /** \brief changes capacity (in number of packets)
    */
   void
@@ -121,9 +118,8 @@ public:
     return m_table.size();
   }
 
-PUBLIC_WITH_TESTS_ELSE_PRIVATE:
-  void
-  dump();
+  PUBLIC_WITH_TESTS_ELSE_PRIVATE : void
+                                   dump();
 
 public: // enumeration
   struct EntryFromEntryImpl

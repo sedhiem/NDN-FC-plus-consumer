@@ -84,9 +84,7 @@ LruPolicy::evictEntries()
 void
 LruPolicy::eraseOne(iterator i)
 {
-  BOOST_ASSERT(!m_queues[QUEUE_UNSOLICITED].empty() ||
-               !m_queues[QUEUE_STALE].empty() ||
-               !m_queues[QUEUE_FIFO].empty());
+  BOOST_ASSERT(!m_queues[QUEUE_UNSOLICITED].empty() || !m_queues[QUEUE_STALE].empty() || !m_queues[QUEUE_FIFO].empty());
 
   this->emitSignal(beforeEvict, i);
 }

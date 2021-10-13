@@ -53,9 +53,7 @@ cleanupOnFaceRemoval(NameTree& nt, Fib& fib, Pit& pit, const Face& face)
     nt.eraseIfEmpty(const_cast<name_tree::Entry*>(i->second), false);
   }
 
-  BOOST_ASSERT(nt.size() == 0 ||
-               std::none_of(nt.begin(), nt.end(),
-                            [] (const name_tree::Entry& nte) { return nte.isEmpty(); }));
+  BOOST_ASSERT(nt.size() == 0 || std::none_of(nt.begin(), nt.end(), [](const name_tree::Entry& nte) { return nte.isEmpty(); }));
 }
 
 } // namespace nfd

@@ -27,10 +27,10 @@
 #define NFD_DAEMON_TABLE_DEAD_NONCE_LIST_HPP
 
 #include "core/common.hpp"
-#include <boost/multi_index_container.hpp>
-#include <boost/multi_index/sequenced_index.hpp>
-#include <boost/multi_index/hashed_index.hpp>
 #include "core/scheduler.hpp"
+#include <boost/multi_index/hashed_index.hpp>
+#include <boost/multi_index/sequenced_index.hpp>
+#include <boost/multi_index_container.hpp>
 
 namespace nfd {
 
@@ -61,8 +61,7 @@ public:
    *         A loop cannot be detected if delay of the cycle is greater than lifetime.
    *  \throw std::invalid_argument if lifetime is less than MIN_LIFETIME
    */
-  explicit
-  DeadNonceList(const time::nanoseconds& lifetime = DEFAULT_LIFETIME);
+  explicit DeadNonceList(const time::nanoseconds& lifetime = DEFAULT_LIFETIME);
 
   ~DeadNonceList();
 
@@ -96,13 +95,8 @@ private: // Entry and Index
 
   typedef boost::multi_index_container<
     Entry,
-    boost::multi_index::indexed_by<
-      boost::multi_index::sequenced<>,
-      boost::multi_index::hashed_non_unique<
-        boost::multi_index::identity<Entry>
-      >
-    >
-  > Index;
+    boost::multi_index::indexed_by<boost::multi_index::sequenced<>, boost::multi_index::hashed_non_unique<boost::multi_index::identity<Entry>>>>
+    Index;
 
   typedef Index::nth_index<0>::type Queue;
   typedef Index::nth_index<1>::type Hashtable;
@@ -144,18 +138,18 @@ private:
   Queue& m_queue;
   Hashtable& m_ht;
 
-PUBLIC_WITH_TESTS_ELSE_PRIVATE: // actual lifetime estimation and capacity control
+  PUBLIC_WITH_TESTS_ELSE_PRIVATE : // actual lifetime estimation and capacity control
 
-  // ---- current capacity and hard limits
+                                   // ---- current capacity and hard limits
 
-  /** \brief current capacity of index
+                                   /** \brief current capacity of index
    *
    *  The index size is maintained to be near this capacity.
    *
    *  The capacity is adjusted so that every Entry is expected to be kept for m_lifetime.
    *  This is achieved by mark() and adjustCapacity().
    */
-  size_t m_capacity;
+                                   size_t m_capacity;
 
   static const size_t INITIAL_CAPACITY;
 

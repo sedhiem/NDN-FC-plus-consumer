@@ -58,9 +58,7 @@ compareQueryWithData(const Name& queryName, const Data& data)
 {
   bool queryIsFullName = !queryName.empty() && queryName[-1].isImplicitSha256Digest();
 
-  int cmp = queryIsFullName ?
-            queryName.compare(0, queryName.size() - 1, data.getName()) :
-            queryName.compare(data.getName());
+  int cmp = queryIsFullName ? queryName.compare(0, queryName.size() - 1, data.getName()) : queryName.compare(data.getName());
 
   if (cmp != 0) { // Name without digest differs
     return cmp;

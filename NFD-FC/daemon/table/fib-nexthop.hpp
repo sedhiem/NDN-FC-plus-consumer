@@ -38,8 +38,7 @@ namespace fib {
 class NextHop
 {
 public:
-  explicit
-  NextHop(Face& face);
+  explicit NextHop(Face& face);
 
   Face&
   getFace() const

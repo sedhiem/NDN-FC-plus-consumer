@@ -24,8 +24,8 @@
  */
 
 #include "fib.hpp"
-#include "pit-entry.hpp"
 #include "measurements-entry.hpp"
+#include "pit-entry.hpp"
 #include "core/asserts.hpp"
 
 namespace nfd {

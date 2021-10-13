@@ -53,8 +53,7 @@ std::set<std::string>
 Policy::getPolicyNames()
 {
   std::set<std::string> policyNames;
-  boost::copy(getRegistry() | boost::adaptors::map_keys,
-              std::inserter(policyNames, policyNames.end()));
+  boost::copy(getRegistry() | boost::adaptors::map_keys, std::inserter(policyNames, policyNames.end()));
   return policyNames;
 }
 

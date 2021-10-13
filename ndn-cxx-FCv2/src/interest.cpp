@@ -20,8 +20,8 @@
  */
 
 #include "interest.hpp"
-#include "util/random.hpp"
 #include "data.hpp"
+#include "util/random.hpp"
 
 #include <cstring>
 #include <sstream>
@@ -32,8 +32,7 @@ BOOST_CONCEPT_ASSERT((boost::EqualityComparable<Interest>));
 BOOST_CONCEPT_ASSERT((WireEncodable<Interest>));
 BOOST_CONCEPT_ASSERT((WireEncodableWithEncodingBuffer<Interest>));
 BOOST_CONCEPT_ASSERT((WireDecodable<Interest>));
-static_assert(std::is_base_of<tlv::Error, Interest::Error>::value,
-              "Interest::Error must inherit from tlv::Error");
+static_assert(std::is_base_of<tlv::Error, Interest::Error>::value, "Interest::Error must inherit from tlv::Error");
 
 Interest::Interest(const Name& name, time::milliseconds interestLifetime)
   : m_name(name)
@@ -71,7 +70,7 @@ Interest::wireEncode(EncodingImpl<TAG>& encoder) const
   totalLength += encoder.prependByteArray(reinterpret_cast<uint8_t*>(&erasecache), sizeof(erasecache));
   totalLength += encoder.prependVarNumber(sizeof(erasecache));
   totalLength += encoder.prependVarNumber(tlv::EraseCache);
-  
+
   //Function
   totalLength += getFunction().wireEncode(encoder);
 
@@ -82,9 +81,7 @@ Interest::wireEncode(EncodingImpl<TAG>& encoder) const
 
   // InterestLifetime
   if (getInterestLifetime() != DEFAULT_INTEREST_LIFETIME) {
-    totalLength += prependNonNegativeIntegerBlock(encoder,
-                                                  tlv::InterestLifetime,
-                                                  getInterestLifetime().count());
+    totalLength += prependNonNegativeIntegerBlock(encoder, tlv::InterestLifetime, getInterestLifetime().count());
   }
 
   // Nonce
@@ -213,9 +210,7 @@ Interest::matchesName(const Name& name) const
       !(name.size() - m_name.size() <= static_cast<size_t>(getMaxSuffixComponents())))
     return false;
 
-  if (!getExclude().empty() &&
-      name.size() > m_name.size() &&
-      getExclude().isExcluded(name[m_name.size()]))
+  if (!getExclude().empty() && name.size() > m_name.size() && getExclude().isExcluded(name[m_name.size()]))
     return false;
 
   return true;
@@ -230,15 +225,13 @@ Interest::matchesData(const Data& data) const
 
   // check MinSuffixComponents
   bool hasMinSuffixComponents = getMinSuffixComponents() >= 0;
-  size_t minSuffixComponents = hasMinSuffixComponents ?
-                               static_cast<size_t>(getMinSuffixComponents()) : 0;
+  size_t minSuffixComponents = hasMinSuffixComponents ? static_cast<size_t>(getMinSuffixComponents()) : 0;
   if (!(interestNameLength + minSuffixComponents <= fullNameLength))
     return false;
 
   // check MaxSuffixComponents
   bool hasMaxSuffixComponents = getMaxSuffixComponents() >= 0;
-  if (hasMaxSuffixComponents &&
-      !(interestNameLength + getMaxSuffixComponents() >= fullNameLength))
+  if (hasMaxSuffixComponents && !(interestNameLength + getMaxSuffixComponents() >= fullNameLength))
     return false;
 
   // check prefix
@@ -309,25 +302,23 @@ bool
 Interest::matchesInterest(const Interest& other) const
 {
   /// @todo #3162 match ForwardingHint field
-  return (this->getName() == other.getName() &&
-          this->getSelectors() == other.getSelectors());
+  return (this->getName() == other.getName() && this->getSelectors() == other.getSelectors());
 }
 
 void
 Interest::removeHeadFunction() const
 {
-    std::string str = this->getFunction().toUri();
-    if(this->hasFunction()){
-      auto found = str.find("/", 1);
-      if(found != std::string::npos){ //has multiple function headers
-        str.erase(1, found);
-      }
-      else{
-        str.erase(1, str.length()-1); //only one function header
-      }
+  std::string str = this->getFunction().toUri();
+  if (this->hasFunction()) {
+    auto found = str.find("/", 1);
+    if (found != std::string::npos) { //has multiple function headers
+      str.erase(1, found);
     }
-    this->setFunction(Function(str));
-
+    else {
+      str.erase(1, str.length() - 1); //only one function header
+    }
+  }
+  this->setFunction(Function(str));
 }
 
 // ---- field accessors ----
@@ -336,7 +327,7 @@ Interest::getEraseCache() const
 {
   return *m_erasecache;
 }
-  
+
 Interest&
 Interest::setEraseCache(uint32_t erasecache)
 {

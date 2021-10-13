@@ -51,8 +51,7 @@ typedef std::vector<fib::NextHop> NextHopList;
 class Entry : noncopyable
 {
 public:
-  explicit
-  Entry(const Name& prefix);
+  explicit Entry(const Name& prefix);
 
   const Name&
   getPrefix() const

@@ -30,9 +30,7 @@ namespace measurements {
 
 using fw::Strategy;
 
-MeasurementsAccessor::MeasurementsAccessor(Measurements& measurements,
-                                           const StrategyChoice& strategyChoice,
-                                           const Strategy& strategy)
+MeasurementsAccessor::MeasurementsAccessor(Measurements& measurements, const StrategyChoice& strategyChoice, const Strategy& strategy)
   : m_measurements(measurements)
   , m_strategyChoice(strategyChoice)
   , m_strategy(&strategy)

@@ -37,10 +37,7 @@ Entry::Entry(const Name& prefix)
 NextHopList::iterator
 Entry::findNextHop(const Face& face)
 {
-  return std::find_if(m_nextHops.begin(), m_nextHops.end(),
-                      [&face] (const NextHop& nexthop) {
-                        return &nexthop.getFace() == &face;
-                      });
+  return std::find_if(m_nextHops.begin(), m_nextHops.end(), [&face](const NextHop& nexthop) { return &nexthop.getFace() == &face; });
 }
 
 bool
@@ -74,8 +71,7 @@ Entry::removeNextHop(const Face& face)
 void
 Entry::sortNextHops()
 {
-  std::sort(m_nextHops.begin(), m_nextHops.end(),
-            [] (const NextHop& a, const NextHop& b) { return a.getCost() < b.getCost(); });
+  std::sort(m_nextHops.begin(), m_nextHops.end(), [](const NextHop& a, const NextHop& b) { return a.getCost() < b.getCost(); });
 }
 
 } // namespace fib

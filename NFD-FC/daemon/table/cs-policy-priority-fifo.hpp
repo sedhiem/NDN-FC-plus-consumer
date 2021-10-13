@@ -36,12 +36,7 @@ namespace priority_fifo {
 typedef std::list<iterator> Queue;
 typedef Queue::iterator QueueIt;
 
-enum QueueType {
-  QUEUE_UNSOLICITED,
-  QUEUE_STALE,
-  QUEUE_FIFO,
-  QUEUE_MAX
-};
+enum QueueType { QUEUE_UNSOLICITED, QUEUE_STALE, QUEUE_FIFO, QUEUE_MAX };
 
 struct EntryInfo
 {
@@ -74,8 +69,7 @@ class PriorityFifoPolicy : public Policy
 public:
   PriorityFifoPolicy();
 
-  virtual
-  ~PriorityFifoPolicy();
+  virtual ~PriorityFifoPolicy();
 
 public:
   static const std::string POLICY_NAME;

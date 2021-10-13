@@ -47,8 +47,7 @@ namespace fib {
 class Fib : noncopyable
 {
 public:
-  explicit
-  Fib(NameTree& nameTree);
+  explicit Fib(NameTree& nameTree);
 
   size_t
   size() const

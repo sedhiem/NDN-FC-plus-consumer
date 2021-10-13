@@ -26,8 +26,8 @@
 #ifndef NFD_DAEMON_TABLE_CS_POLICY_HPP
 #define NFD_DAEMON_TABLE_CS_POLICY_HPP
 
-#include "cs-internal.hpp"
 #include "cs-entry-impl.hpp"
+#include "cs-internal.hpp"
 
 namespace nfd {
 namespace cs {
@@ -60,11 +60,9 @@ public: // registry
   getPolicyNames();
 
 public:
-  explicit
-  Policy(const std::string& policyName);
+  explicit Policy(const std::string& policyName);
 
-  virtual
-  ~Policy() = default;
+  virtual ~Policy() = default;
 
   const std::string&
   getName() const;
@@ -78,7 +76,7 @@ public:
   /** \brief sets cs
    */
   void
-  setCs(Cs *cs);
+  setCs(Cs* cs);
 
   /** \brief gets hard limit (in number of entries)
    */
@@ -211,7 +209,7 @@ Policy::getCs() const
 }
 
 inline void
-Policy::setCs(Cs *cs)
+Policy::setCs(Cs* cs)
 {
   m_cs = cs;
 }
@@ -228,14 +226,14 @@ Policy::getLimit() const
 /** \brief registers a CS policy
  *  \param P a subclass of nfd::cs::Policy
  */
-#define NFD_REGISTER_CS_POLICY(P)                      \
-static class NfdAuto ## P ## CsPolicyRegistrationClass \
-{                                                      \
-public:                                                \
-  NfdAuto ## P ## CsPolicyRegistrationClass()          \
-  {                                                    \
-    ::nfd::cs::Policy::registerPolicy<P>();            \
-  }                                                    \
-} g_nfdAuto ## P ## CsPolicyRegistrationVariable
+#define NFD_REGISTER_CS_POLICY(P)                    \
+  static class NfdAuto##P##CsPolicyRegistrationClass \
+  {                                                  \
+  public:                                            \
+    NfdAuto##P##CsPolicyRegistrationClass()          \
+    {                                                \
+      ::nfd::cs::Policy::registerPolicy<P>();        \
+    }                                                \
+  } g_nfdAuto##P##CsPolicyRegistrationVariable
 
 #endif // NFD_DAEMON_TABLE_CS_POLICY_HPP

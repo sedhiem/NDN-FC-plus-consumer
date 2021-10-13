@@ -71,7 +71,7 @@ PriorityFifoPolicy::doErase(iterator i)
   this->eraseOne(i);
 }
 
-  /*void
+/*void
 PriorityFifoPolicy::executeErase(iterator i)
 {
   this->EraseQueue(i);
@@ -96,9 +96,7 @@ PriorityFifoPolicy::evictEntries()
 void
 PriorityFifoPolicy::evictOne()
 {
-  BOOST_ASSERT(!m_queues[QUEUE_UNSOLICITED].empty() ||
-               !m_queues[QUEUE_STALE].empty() ||
-               !m_queues[QUEUE_FIFO].empty());
+  BOOST_ASSERT(!m_queues[QUEUE_UNSOLICITED].empty() || !m_queues[QUEUE_STALE].empty() || !m_queues[QUEUE_FIFO].empty());
 
   iterator i;
   if (!m_queues[QUEUE_UNSOLICITED].empty()) {
@@ -118,9 +116,7 @@ PriorityFifoPolicy::evictOne()
 void
 PriorityFifoPolicy::eraseOne(iterator i)
 {
-  BOOST_ASSERT(!m_queues[QUEUE_UNSOLICITED].empty() ||
-               !m_queues[QUEUE_STALE].empty() ||
-               !m_queues[QUEUE_FIFO].empty());
+  BOOST_ASSERT(!m_queues[QUEUE_UNSOLICITED].empty() || !m_queues[QUEUE_STALE].empty() || !m_queues[QUEUE_FIFO].empty());
 
   this->detachQueue(i);
   this->emitSignal(beforeEvict, i);
@@ -164,7 +160,7 @@ PriorityFifoPolicy::detachQueue(iterator i)
   delete entryInfo;
 }
 
-  /*void
+/*void
 PriorityFifoPolicy::EraseQueue(iterator i)
 {
   EntryInfo* entryInfo = m_entryInfoMap[i];

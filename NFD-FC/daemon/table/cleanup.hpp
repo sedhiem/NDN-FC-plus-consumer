@@ -26,8 +26,8 @@
 #ifndef NFD_DAEMON_TABLE_CLEANUP_HPP
 #define NFD_DAEMON_TABLE_CLEANUP_HPP
 
-#include "name-tree.hpp"
 #include "fib.hpp"
+#include "name-tree.hpp"
 #include "pit.hpp"
 
 namespace nfd {

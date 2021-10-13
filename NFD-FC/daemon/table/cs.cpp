@@ -76,7 +76,7 @@ Cs::insert(const Data& data, bool isUnsolicited)
 {
   shared_ptr<Data> m_data;
 
-  if(!data.hasFunction()){
+  if (!data.hasFunction()) {
     m_data = make_shared<Data>(data.getName());
 
     m_data->setFunction(data.getFunction());
@@ -85,10 +85,10 @@ Cs::insert(const Data& data, bool isUnsolicited)
     m_data->setContent(data.getContent());
     m_keyChain.sign(*m_data);
   }
-  else{
+  else {
     Name m_funcname(data.getFunction().toUri());
     Name prefix(data.getName());
-    if(m_funcname == prefix){
+    if (m_funcname == prefix) {
       m_data = make_shared<Data>(data.getName());
 
       m_data->setFunction(data.getFunction());
@@ -97,7 +97,7 @@ Cs::insert(const Data& data, bool isUnsolicited)
       m_data->setContent(data.getContent());
       m_keyChain.sign(*m_data);
     }
-    else{
+    else {
       prefix.append(m_funcname);
       m_data = make_shared<Data>(prefix);
 
@@ -108,7 +108,7 @@ Cs::insert(const Data& data, bool isUnsolicited)
       m_keyChain.sign(*m_data);
     }
   }
-  
+
   NFD_LOG_DEBUG("insert " << m_data->getName());
 
   if (m_policy->getLimit() == 0) {
@@ -177,9 +177,7 @@ Cs::erase(const Interest& interest) const
 }
 
 void
-Cs::find(const Interest& interest,
-         const HitCallback& hitCallback,
-         const MissCallback& missCallback) const
+Cs::find(const Interest& interest, const HitCallback& hitCallback, const MissCallback& missCallback) const
 {
   BOOST_ASSERT(static_cast<bool>(hitCallback));
   BOOST_ASSERT(static_cast<bool>(missCallback));
@@ -205,7 +203,7 @@ Cs::find(const Interest& interest,
   }
 
   if (match == last || match->getName() != prefix) {
-    if(match != last){
+    if (match != last) {
       m_policy->Erase(match);
     }
     NFD_LOG_DEBUG("  no-match");
@@ -266,9 +264,7 @@ Cs::setPolicyImpl(unique_ptr<Policy> policy)
 {
   NFD_LOG_DEBUG("set-policy " << policy->getName());
   m_policy = std::move(policy);
-  m_beforeEvictConnection = m_policy->beforeEvict.connect([this] (iterator it) {
-      m_table.erase(it);
-    });
+  m_beforeEvictConnection = m_policy->beforeEvict.connect([this](iterator it) { m_table.erase(it); });
 
   m_policy->setCs(this);
   BOOST_ASSERT(m_policy->getCs() == this);

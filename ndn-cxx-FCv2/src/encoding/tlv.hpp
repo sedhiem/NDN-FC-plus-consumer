@@ -50,8 +50,7 @@ namespace tlv {
 class Error : public std::runtime_error
 {
 public:
-  explicit
-  Error(const std::string& what)
+  explicit Error(const std::string& what)
     : std::runtime_error(what)
   {
   }
@@ -61,36 +60,36 @@ public:
  *  @sa https://named-data.net/doc/ndn-tlv/types.html
  */
 enum {
-  Interest      = 5,
-  Data          = 6,
-  Name          = 7,
+  Interest = 5,
+  Data = 6,
+  Name = 7,
   ImplicitSha256DigestComponent = 1,
   GenericNameComponent = 8,
-  Selectors     = 9,
-  Nonce         = 10,
-  InterestLifetime          = 12,
-  ForwardingHint            = 30,
-  MinSuffixComponents       = 13,
-  MaxSuffixComponents       = 14,
+  Selectors = 9,
+  Nonce = 10,
+  InterestLifetime = 12,
+  ForwardingHint = 30,
+  MinSuffixComponents = 13,
+  MaxSuffixComponents = 14,
   PublisherPublicKeyLocator = 15,
-  Exclude         = 16,
-  ChildSelector   = 17,
-  MustBeFresh     = 18,
-  Any             = 19,
-  MetaInfo        = 20,
-  Content         = 21,
-  SignatureInfo   = 22,
-  SignatureValue  = 23,
-  ContentType     = 24,
+  Exclude = 16,
+  ChildSelector = 17,
+  MustBeFresh = 18,
+  Any = 19,
+  MetaInfo = 20,
+  Content = 21,
+  SignatureInfo = 22,
+  SignatureValue = 23,
+  ContentType = 24,
   FreshnessPeriod = 25,
-  FinalBlockId    = 26,
-  SignatureType   = 27,
-  KeyLocator      = 28,
-  KeyDigest       = 29,
-  LinkPreference  = 30,
-  LinkDelegation  = 31,
-  Function        = 32,
-  EraseCache      = 33,
+  FinalBlockId = 26,
+  SignatureType = 27,
+  KeyLocator = 28,
+  KeyDigest = 29,
+  LinkPreference = 30,
+  LinkDelegation = 31,
+  Function = 32,
+  EraseCache = 33,
 
   NameComponentMin = 1,
   NameComponentMax = 65535,
@@ -344,13 +343,12 @@ shouldSelectContiguousReadNumber()
   return (std::is_convertible<DecayedIterator, const ValueType*>::value ||
           std::is_convertible<DecayedIterator, typename std::basic_string<ValueType>::const_iterator>::value ||
           std::is_convertible<DecayedIterator, typename std::vector<ValueType>::const_iterator>::value) &&
-         sizeof(ValueType) == 1 &&
-         !std::is_same<ValueType, bool>::value;
+         sizeof(ValueType) == 1 && !std::is_same<ValueType, bool>::value;
 }
 
 template<typename Iterator>
-class ReadNumber : public std::conditional<shouldSelectContiguousReadNumber<Iterator>(),
-                                           ReadNumberFast<Iterator>, ReadNumberSlow<Iterator>>::type
+class ReadNumber
+  : public std::conditional<shouldSelectContiguousReadNumber<Iterator>(), ReadNumberFast<Iterator>, ReadNumberSlow<Iterator>>::type
 {
 };
 
@@ -370,8 +368,7 @@ readVarNumber(Iterator& begin, const Iterator& end, uint64_t& number)
     return true;
   }
 
-  size_t size = firstOctet == 253 ? 2 :
-                firstOctet == 254 ? 4 : 8;
+  size_t size = firstOctet == 253 ? 2 : firstOctet == 254 ? 4 : 8;
   return detail::ReadNumber<Iterator>()(size, begin, end, number);
 }
 
@@ -420,9 +417,7 @@ readType(Iterator& begin, const Iterator& end)
 constexpr size_t
 sizeOfVarNumber(uint64_t number)
 {
-  return number < 253 ? 1 :
-         number <= std::numeric_limits<uint16_t>::max() ? 3 :
-         number <= std::numeric_limits<uint32_t>::max() ? 5 : 9;
+  return number < 253 ? 1 : number <= std::numeric_limits<uint16_t>::max() ? 3 : number <= std::numeric_limits<uint32_t>::max() ? 5 : 9;
 }
 
 inline size_t
@@ -473,9 +468,10 @@ readNonNegativeInteger(size_t size, Iterator& begin, const Iterator& end)
 constexpr size_t
 sizeOfNonNegativeInteger(uint64_t integer)
 {
-  return integer <= std::numeric_limits<uint8_t>::max() ? 1 :
+  return integer <= std::numeric_limits<uint8_t>::max()  ? 1 :
          integer <= std::numeric_limits<uint16_t>::max() ? 2 :
-         integer <= std::numeric_limits<uint32_t>::max() ? 4 : 8;
+         integer <= std::numeric_limits<uint32_t>::max() ? 4 :
+                                                           8;
 }
 
 inline size_t

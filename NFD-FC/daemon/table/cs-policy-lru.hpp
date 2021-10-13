@@ -28,9 +28,9 @@
 
 #include "cs-policy.hpp"
 
-#include <boost/multi_index_container.hpp>
-#include <boost/multi_index/sequenced_index.hpp>
 #include <boost/multi_index/hashed_index.hpp>
+#include <boost/multi_index/sequenced_index.hpp>
+#include <boost/multi_index_container.hpp>
 
 namespace nfd {
 namespace cs {
@@ -46,14 +46,9 @@ struct EntryItComparator
 };
 
 typedef boost::multi_index_container<
-    iterator,
-    boost::multi_index::indexed_by<
-      boost::multi_index::sequenced<>,
-      boost::multi_index::ordered_unique<
-        boost::multi_index::identity<iterator>, EntryItComparator
-      >
-    >
-  > Queue;
+  iterator, boost::multi_index::indexed_by<boost::multi_index::sequenced<>,
+                                           boost::multi_index::ordered_unique<boost::multi_index::identity<iterator>, EntryItComparator>>>
+  Queue;
 
 /** \brief LRU cs replacement policy
  *

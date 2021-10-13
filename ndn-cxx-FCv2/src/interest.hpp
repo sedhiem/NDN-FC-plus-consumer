@@ -23,8 +23,8 @@
 #define NDN_INTEREST_HPP
 
 #include "delegation-list.hpp"
-#include "name.hpp"
 #include "function.hpp"
+#include "name.hpp"
 #include "packet-base.hpp"
 #include "selectors.hpp"
 #include "util/time.hpp"
@@ -46,8 +46,7 @@ public:
   class Error : public tlv::Error
   {
   public:
-    explicit
-    Error(const std::string& what)
+    explicit Error(const std::string& what)
       : tlv::Error(what)
     {
     }
@@ -58,15 +57,13 @@ public:
    *  @warning In certain contexts that use Interest::shared_from_this(), Interest must be created
    *           using `make_shared`. Otherwise, .shared_from_this() will trigger undefined behavior.
    */
-  explicit
-  Interest(const Name& name = Name(), time::milliseconds interestLifetime = DEFAULT_INTEREST_LIFETIME);
+  explicit Interest(const Name& name = Name(), time::milliseconds interestLifetime = DEFAULT_INTEREST_LIFETIME);
 
   /** @brief Create from wire encoding
    *  @warning In certain contexts that use Interest::shared_from_this(), Interest must be created
    *           using `make_shared`. Otherwise, .shared_from_this() will trigger undefined behavior.
    */
-  explicit
-  Interest(const Block& wire);
+  explicit Interest(const Block& wire);
 
   /**
    * @brief Fast encoding or block size estimation
@@ -169,13 +166,13 @@ public: // Name, Nonce, and Guiders
 
   uint32_t
   getEraseCache() const;
-  
+
   Interest&
   setEraseCache(uint32_t erasecache);
 
   void
   refreshEraseCache() const;
-  
+
   bool
   hasFunction() const
   {
@@ -201,8 +198,8 @@ public: // Name, Nonce, and Guiders
   Interest&
   setNonce(uint32_t nonce);
 
-  void setNonce2
-  (uint32_t nonce) const;
+  void
+  setNonce2(uint32_t nonce) const;
 
   /** @brief Refresh nonce
    *

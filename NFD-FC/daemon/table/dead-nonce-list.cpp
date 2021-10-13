@@ -59,8 +59,7 @@ DeadNonceList::DeadNonceList(const time::nanoseconds& lifetime)
   }
 
   m_markEvent = scheduler::schedule(m_markInterval, bind(&DeadNonceList::mark, this));
-  m_adjustCapacityEvent = scheduler::schedule(m_adjustCapacityInterval,
-                                              bind(&DeadNonceList::adjustCapacity, this));
+  m_adjustCapacityEvent = scheduler::schedule(m_adjustCapacityInterval, bind(&DeadNonceList::adjustCapacity, this));
 }
 
 DeadNonceList::~DeadNonceList()
@@ -71,8 +70,7 @@ DeadNonceList::~DeadNonceList()
   BOOST_ASSERT_MSG(DEFAULT_LIFETIME >= MIN_LIFETIME, "DEFAULT_LIFETIME is too small");
   static_assert(INITIAL_CAPACITY >= MIN_CAPACITY, "INITIAL_CAPACITY is too small");
   static_assert(INITIAL_CAPACITY <= MAX_CAPACITY, "INITIAL_CAPACITY is too large");
-  BOOST_ASSERT_MSG(static_cast<size_t>(MIN_CAPACITY * CAPACITY_UP) > MIN_CAPACITY,
-                   "CAPACITY_UP must be able to increase from MIN_CAPACITY");
+  BOOST_ASSERT_MSG(static_cast<size_t>(MIN_CAPACITY * CAPACITY_UP) > MIN_CAPACITY, "CAPACITY_UP must be able to increase from MIN_CAPACITY");
   BOOST_ASSERT_MSG(static_cast<size_t>(MAX_CAPACITY * CAPACITY_DOWN) < MAX_CAPACITY,
                    "CAPACITY_DOWN must be able to decrease from MAX_CAPACITY");
   BOOST_ASSERT_MSG(CAPACITY_UP > 1.0, "CAPACITY_UP must adjust up");
@@ -106,8 +104,7 @@ DeadNonceList::Entry
 DeadNonceList::makeEntry(const Name& name, uint32_t nonce)
 {
   Block nameWire = name.wireEncode();
-  return CityHash64WithSeed(reinterpret_cast<const char*>(nameWire.wire()), nameWire.size(),
-                            static_cast<uint64_t>(nonce));
+  return CityHash64WithSeed(reinterpret_cast<const char*>(nameWire.wire()), nameWire.size(), static_cast<uint64_t>(nonce));
 }
 
 size_t
@@ -131,19 +128,16 @@ DeadNonceList::mark()
 void
 DeadNonceList::adjustCapacity()
 {
-  std::pair<std::multiset<size_t>::iterator, std::multiset<size_t>::iterator> equalRange =
-    m_actualMarkCounts.equal_range(EXPECTED_MARK_COUNT);
+  std::pair<std::multiset<size_t>::iterator, std::multiset<size_t>::iterator> equalRange = m_actualMarkCounts.equal_range(EXPECTED_MARK_COUNT);
 
   if (equalRange.second == m_actualMarkCounts.begin()) {
     // all counts are above expected count, adjust down
-    m_capacity = std::max(MIN_CAPACITY,
-                          static_cast<size_t>(m_capacity * CAPACITY_DOWN));
+    m_capacity = std::max(MIN_CAPACITY, static_cast<size_t>(m_capacity * CAPACITY_DOWN));
     NFD_LOG_TRACE("adjustCapacity DOWN capacity=" << m_capacity);
   }
   else if (equalRange.first == m_actualMarkCounts.end()) {
     // all counts are below expected count, adjust up
-    m_capacity = std::min(MAX_CAPACITY,
-                          static_cast<size_t>(m_capacity * CAPACITY_UP));
+    m_capacity = std::min(MAX_CAPACITY, static_cast<size_t>(m_capacity * CAPACITY_UP));
     NFD_LOG_TRACE("adjustCapacity UP capacity=" << m_capacity);
   }
 
@@ -151,8 +145,7 @@ DeadNonceList::adjustCapacity()
 
   this->evictEntries();
 
-  m_adjustCapacityEvent = scheduler::schedule(m_adjustCapacityInterval,
-                                              bind(&DeadNonceList::adjustCapacity, this));
+  m_adjustCapacityEvent = scheduler::schedule(m_adjustCapacityInterval, bind(&DeadNonceList::adjustCapacity, this));
 }
 
 void
